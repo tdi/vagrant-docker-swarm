@@ -30,7 +30,7 @@ After starting swarm, you can use my testing Docker image to play with. It is ca
 Go to the master node and start docker swarm:
 
 ```bash
-   (host)# vagrant ssh master
+   (host)# vagrant ssh manager
 (manager)# docker swarm init --advertise-addr 192.168.10.2
 
 docker swarm join \
@@ -51,7 +51,7 @@ ID                           HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 Now create a web service, with 1 replica, on any of the nodes:
 
 ```bash
-docker service create --name web --replicas 1 --publich 8080:8080 darek/goweb:1.0
+docker service create --name web --replicas 1 --publish 8080:8080 darek/goweb:1.0
 ```
 You can see the status od the service with `docker service ps web`. 
 ```
@@ -79,7 +79,7 @@ Let's do a rolling update of the service, first let's scale it to 10 - you alrea
 First we will update the defintion of the service to say that updates will have a delay of 5s.  
 
 ```bash
-docker service udpate --update-delay 5s web
+docker service update --update-delay 5s web
 ```
 Let's us update the service now:
 
@@ -89,7 +89,7 @@ docker service update --image darek/goweb:2.0 web
 Now docker will update service one by one with a 5s delay between the updates. If you want to introduce parallelism to updates you can specify if with the `--update-parallelism` flag. 
 
 ```bash 
-docker service update --update-parallelism 2
+docker service update --update-parallelism 2 web
 ```
 
 Let's see how it goes:
