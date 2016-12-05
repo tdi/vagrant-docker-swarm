@@ -3,7 +3,7 @@
 This is a simple Vagrantfile which can be used to spin few nodes with Docker 1.12+ installed. You
 can play with Docker Swarm on it. Boxes are Ubuntu Trusty amd64. 
 
-# Docker SWARM
+# Docker Swarm
 
 Docker Swarm is a Docker clustering solution, it turns multiple physical (or virtual) hosts into a one cluster, which practically behaves as a single Docker host. Swarm additionally gives you tools and mechiasms to easily scale your containers and create managed services with automatic load balancing to the exposed ports. 
 
