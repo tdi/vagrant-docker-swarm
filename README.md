@@ -7,7 +7,7 @@ can play with Docker Swarm on it. Boxes are Ubuntu Trusty amd64.
 
 Docker Swarm is a Docker clustering solution, it turns multiple physical (or virtual) hosts into a one cluster, which practically behaves as a single Docker host. Swarm additionally gives you tools and mechiasms to easily scale your containers and create managed services with automatic load balancing to the exposed ports. 
 
-Swarm uses [Raft Consensus Algotihm](http://thesecretlivesofdata.com/raft/) to manage the cluster state. Swarm can tolerate `(N-1)/2` failures and needs `(N/2)+1` nodes to agree on values. 
+Swarm uses [Raft Consensus Algortihm](http://thesecretlivesofdata.com/raft/) to manage the cluster state. Swarm can tolerate `(N-1)/2` failures and needs `(N/2)+1` nodes to agree on values. 
 
 # Customize
 
@@ -21,7 +21,7 @@ instances = [{ :name => "worker1", :ip => "192.168.10.3"},
 
 ```
 
-`/etc/hosts` on every machine is populated with ip and name values so names are resolved on every 
+`/etc/hosts` on every machine is populated with an IP address and a name, so that names are resolved on every 
 machine. This mechanism is not idempotent, reprovisioning will append the hosts again. 
 
 # Auto mode
