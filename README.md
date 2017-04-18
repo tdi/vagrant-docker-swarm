@@ -11,25 +11,21 @@ Swarm uses [Raft Consensus Algortihm](http://thesecretlivesofdata.com/raft/) to 
 
 # Customize
 
-By default `vagrant up` spins three machines: manager, worker1 and worker2. You can adjust how many
-machines you want in the `Vagrantfile`. The `instances` array contains hashes representing every
-worker machine, keys are `:name` and `:ip`. Manager by default has address "192.168.10.2", workers have consecutive ips. 
+By default `vagrant up` spins up 3 machines: `manager`, `worker1`, `worker2`. You can adjust how many
+workers you want in the `Vagrantfile`, by setting the `numworkers` variable. Manager, by default, has address "192.168.10.2", workers have consecutive ips. 
 
 ```ruby
-instances = [{ :name => "worker1", :ip => "192.168.10.3"}, 
-             {:name => "worker2", :ip => "192.168.10.4" }]
-
+numworkers = 2
 ```
 
-`/etc/hosts` on every machine is populated with an IP address and a name, so that names are resolved on every 
-machine. This mechanism is not idempotent, reprovisioning will append the hosts again. 
+`/etc/hosts` on every machine is populated with an IP address and a name of every other machine, so that names are resolved within the cluster. This mechanism is not idempotent, reprovisioning will append the hosts again. 
 
 # Auto mode
 
 By default, vagrant will create pure machines with docker installed. You can run 
-`env=AUTO_START_SWARM=true vagrant up` to provision swarm automatically. You will get an already running Docker swarm cluster.
+`AUTO_START_SWARM=true vagrant up` to provision swarm automatically. You will get an already running Docker swarm cluster.
 
-#  Play
+# Play
 
 After starting swarm, you can use my testing Docker image to play with. It is called `darek/goweb` and is a super simple Web app, displaying the hostname, and a version. There are three tags: `1.0`, `2.0` and `latest`. They can be used to play with swarm rolling update feature. The container exposes port 8080. 
 

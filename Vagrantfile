@@ -7,9 +7,13 @@
 # you're doing.
 
 auto = ENV['AUTO_START_SWARM'] || false
+numworkers = 2
 
-instances = [{ :name => "worker1", :ip => "192.168.10.3"}, 
-             {:name => "worker2", :ip => "192.168.10.4" }]
+instances = []
+
+(1..numworkers).each do |n| 
+  instances.push({:name => "worker#{n}", :ip => "192.168.10.#{n+2}"})
+end
 
 manager_ip = "192.168.10.2"
 
