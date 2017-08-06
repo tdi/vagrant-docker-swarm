@@ -18,6 +18,17 @@ workers you want in the `Vagrantfile`, by setting the `numworkers` variable. Man
 numworkers = 2
 ```
 
+If your provisioner is `Virtualbox`, you can modify the vm allocations for memory and cpu by changing these variables:
+
+```ruby
+vmmemory = 512
+```
+
+```ruby
+numcpu = 1
+```
+
+
 `/etc/hosts` on every machine is populated with an IP address and a name of every other machine, so that names are resolved within the cluster. This mechanism is not idempotent, reprovisioning will append the hosts again. 
 
 # Auto mode
