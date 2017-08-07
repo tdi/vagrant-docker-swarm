@@ -7,7 +7,14 @@
 # you're doing.
 
 auto = ENV['AUTO_START_SWARM'] || false
+# Increase numworkers if you want more than 3 nodes
 numworkers = 2
+
+# VirtualBox settings
+# Increase vmmemory if you want more than 512mb memory in the vm's
+vmmemory = 512
+# Increase numcpu if you want more cpu's per vm
+numcpu = 1
 
 instances = []
 
@@ -24,6 +31,10 @@ File.open("./hosts", 'w') { |file|
 }
 
 Vagrant.configure("2") do |config|
+    config.vm.provider "virtualbox" do |v|
+     	v.memory = vmmemory
+  	v.cpus = numcpu
+    end
     
     config.vm.define "manager" do |i|
       i.vm.box = "ubuntu/trusty64"
