@@ -164,6 +164,10 @@ docker service rm web
 
 And shutdown the shop for good: `vagrant destroy --force`. 
 
+# License 
+
+MIT
+
 # Author 
 Inspired by `denverdino/docker-swarm-mode-vagrant` and `lowescott/learning-tools` repos. 
 
