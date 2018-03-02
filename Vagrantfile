@@ -30,6 +30,35 @@ File.open("./hosts", 'w') { |file|
   end
 }
 
+http_proxy = ""
+# Proxy configuration
+if ENV['http_proxy']
+	http_proxy = ENV['http_proxy']
+	https_proxy = ENV['https_proxy']
+end
+
+no_proxy = "localhost,127.0.0.1,#{manager_ip}"
+instances.each do |instance|
+    no_proxy += "#{instance[:ip]}"
+end
+
+# Vagrant version requirement
+Vagrant.require_version ">= 1.8.4"
+
+# Check if the necessary plugins are installed
+if not http_proxy.to_s.strip.empty?
+	required_plugins = %w( vagrant-proxyconf )
+	plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+	if not plugins_to_install.empty?
+    	puts "Installing plugins: #{plugins_to_install.join(' ')}"
+    	if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+        	exec "vagrant #{ARGV.join(' ')}"
+    	else
+        	abort "Installation of one or more plugins has failed. Aborting."
+    	end
+	end
+end
+
 Vagrant.configure("2") do |config|
     config.vm.provider "virtualbox" do |v|
      	v.memory = vmmemory
@@ -40,6 +69,10 @@ Vagrant.configure("2") do |config|
       i.vm.box = "ubuntu/trusty64"
       i.vm.hostname = "manager"
       i.vm.network "private_network", ip: "#{manager_ip}"
+      # Proxy
+      i.proxy.http     = http_proxy
+      i.proxy.https    = https_proxy
+      i.proxy.no_proxy = no_proxy
       i.vm.provision "shell", path: "./provision.sh"
       if File.file?("./hosts") 
         i.vm.provision "file", source: "hosts", destination: "/tmp/hosts"
@@ -56,6 +89,10 @@ Vagrant.configure("2") do |config|
       i.vm.box = "ubuntu/trusty64"
       i.vm.hostname = instance[:name]
       i.vm.network "private_network", ip: "#{instance[:ip]}"
+      # Proxy
+      i.proxy.http     = http_proxy
+      i.proxy.https    = https_proxy
+      i.proxy.no_proxy = no_proxy
       i.vm.provision "shell", path: "./provision.sh"
       if File.file?("./hosts") 
         i.vm.provision "file", source: "hosts", destination: "/tmp/hosts"
