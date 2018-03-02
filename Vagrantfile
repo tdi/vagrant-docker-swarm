@@ -39,7 +39,7 @@ end
 
 no_proxy = "localhost,127.0.0.1,#{manager_ip}"
 instances.each do |instance|
-    no_proxy += "#{instance[:ip]}"
+    no_proxy += ",#{instance[:ip]}"
 end
 
 # Vagrant version requirement
