@@ -70,9 +70,11 @@ Vagrant.configure("2") do |config|
       i.vm.hostname = "manager"
       i.vm.network "private_network", ip: "#{manager_ip}"
       # Proxy
-      i.proxy.http     = http_proxy
-      i.proxy.https    = https_proxy
-      i.proxy.no_proxy = no_proxy
+      if not http_proxy.to_s.strip.empty?
+        i.proxy.http     = http_proxy
+        i.proxy.https    = https_proxy
+        i.proxy.no_proxy = no_proxy
+      end
       i.vm.provision "shell", path: "./provision.sh"
       if File.file?("./hosts") 
         i.vm.provision "file", source: "hosts", destination: "/tmp/hosts"
@@ -90,9 +92,11 @@ Vagrant.configure("2") do |config|
       i.vm.hostname = instance[:name]
       i.vm.network "private_network", ip: "#{instance[:ip]}"
       # Proxy
-      i.proxy.http     = http_proxy
-      i.proxy.https    = https_proxy
-      i.proxy.no_proxy = no_proxy
+      if not http_proxy.to_s.strip.empty?
+        i.proxy.http     = http_proxy
+        i.proxy.https    = https_proxy
+        i.proxy.no_proxy = no_proxy
+      end
       i.vm.provision "shell", path: "./provision.sh"
       if File.file?("./hosts") 
         i.vm.provision "file", source: "hosts", destination: "/tmp/hosts"
