@@ -3,6 +3,12 @@
 This is a simple Vagrantfile which can be used to spin few nodes with Docker 1.12+ installed. You
 can play with Docker Swarm on it. Boxes are Ubuntu Trusty amd64. 
 
+*Note*: This fork updates the original in providing two additional files, Vagrantefile.XENIAL and provision.sh.XENIAL. Replace the originals with these files if you wish to run a newer version of Docker in the Xenial version of Ubuntu. There is an issue with Docker Swarm when using the original files. See this:
+
+[https://github.com/moby/moby/issues/34165]
+
+So far as I have seen, using the Xenial versions of the files to create and provision the Vagrant nodes fixes this problem.
+
 # Docker Swarm
 
 Docker Swarm is a Docker clustering solution, it turns multiple physical (or virtual) hosts into a one cluster, which practically behaves as a single Docker host. Swarm additionally gives you tools and mechiasms to easily scale your containers and create managed services with automatic load balancing to the exposed ports. 
