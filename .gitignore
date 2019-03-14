@@ -1,0 +1,6 @@
+synced/
+hosts
+*.log
+.vagrant/
+
+
